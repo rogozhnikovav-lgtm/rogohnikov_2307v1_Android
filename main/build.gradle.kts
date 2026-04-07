@@ -42,12 +42,8 @@ android {
 dependencies {
     implementation(libs.androidx.appcompat)
 
-<<<<<<< HEAD
     implementation(libs.androidx.appcompat)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-=======
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
     implementation(libs.androidx.activity.compose)
@@ -69,5 +65,4 @@ dependencies {
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
->>>>>>> 1eccdac (starter for lab 2)
 }
