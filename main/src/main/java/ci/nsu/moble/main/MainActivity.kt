@@ -5,11 +5,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -26,8 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ci.nsu.moble.main.ui.theme.PracticeTheme
 
-
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +39,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-// TODO:  here is to open the second activity
+
 @Composable
 fun MainScreenActivity(modifier: Modifier = Modifier) {
     var text by remember { mutableStateOf("") }
@@ -53,14 +49,17 @@ fun MainScreenActivity(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Added TextField
         TextField(
-            value=text,
-            onValueChange = {text = it},
-            label = {Text("ведите текст для отправки")},
-            modifier = Modifier.width(300.dp)
+            value = text,
+            onValueChange = { text = it },
+            label = { Text("Enter text to send") },
+            modifier = Modifier.fillMaxSize().weight(1f)
         )
+
         Button(
             onClick = {
+                // Create intent and open SecondActivity with text data
                 val intent = Intent(context, SecondActivity::class.java)
                 intent.putExtra("text_data", text)
                 context.startActivity(intent)
