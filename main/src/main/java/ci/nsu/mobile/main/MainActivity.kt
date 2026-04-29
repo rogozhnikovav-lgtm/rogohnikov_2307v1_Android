@@ -138,6 +138,16 @@ fun CounterScreen(
             }
 
             Button(
+                onClick = { viewModel.resetH() },
+                modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.secondary
+                )
+            ) {
+                Text("С ист", fontSize = 16.sp)
+            }
+
+            Button(
                 onClick = { viewModel.increment() },
                 modifier = Modifier.weight(1f),
                 colors = ButtonDefaults.buttonColors(

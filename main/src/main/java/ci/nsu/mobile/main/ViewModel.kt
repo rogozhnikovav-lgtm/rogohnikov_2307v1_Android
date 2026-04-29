@@ -70,9 +70,20 @@ class CounterViewModel : ViewModel() {
 
     fun reset() {
         _uiState.update { currentState ->
+
             val newHistory = listOf("Сброс → итого: 0") + currentState.history.take(4)
             currentState.copy(
                 count = 0,
+                history = newHistory
+            )
+        }
+    }
+    fun resetH() {
+        _uiState.update { currentState ->
+            val newCount = currentState.count
+            val newHistory = listOf("Сброс Истории → итого: 0") - currentState.history.take(4)
+            currentState.copy(
+                count = newCount,
                 history = newHistory
             )
         }
