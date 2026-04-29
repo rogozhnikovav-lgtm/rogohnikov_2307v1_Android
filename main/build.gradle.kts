@@ -1,3 +1,5 @@
+//val org.gradle.accessors.dm.LibrariesForLibs.AndroidxLibraryAccessors.junit: kotlin.Any
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -40,20 +42,35 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.appcompat)
+
 
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.foundation)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    
+    // Navigation
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+//    implementation(libs.androidx.navigation.compose)
+
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+//    androidTestImplementation(libs.androidx.test.runner)
+//    androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
 }
