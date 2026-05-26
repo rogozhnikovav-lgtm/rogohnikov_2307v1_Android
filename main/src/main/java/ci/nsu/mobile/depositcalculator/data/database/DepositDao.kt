@@ -1,12 +1,10 @@
-package ci.nsu.mobile.depositcalculator.data.database.ui.theme
+package ci.nsu.mobile.depositcalculator.data.database
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import ci.nsu.mobile.depositcalculator.data.database.DepositCalculationEntity
 import kotlinx.coroutines.flow.Flow
-
 
 @Dao
 interface DepositDao {
@@ -32,4 +30,5 @@ interface DepositDao {
     // Получить расчет по ID
     @Query("SELECT * FROM deposit_calculations WHERE id = :id")
     suspend fun getCalculationById(id: Long): DepositCalculationEntity?
+
 }
