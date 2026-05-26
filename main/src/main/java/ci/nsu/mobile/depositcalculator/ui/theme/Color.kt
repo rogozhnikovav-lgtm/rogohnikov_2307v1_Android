@@ -1,4 +1,4 @@
-package ci.nsu.mobile.depositcalculator.data.database.ui.theme
+package ci.nsu.mobile.depositcalculator.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

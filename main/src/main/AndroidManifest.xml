@@ -8,16 +8,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Draft">
+
         <activity
-            android:name="ci.nsu.mobile.depositcalculator.data.database.DepositCalculationEntity"
-            android:exported="false"
-            android:label="@string/title_activity_deposit_calculation_entity"
-            android:theme="@style/Theme.Draft" />
-        <activity
-            android:name="ci.nsu.mobile.depositcalculator.model.DepositCalculation"
-            android:exported="false"
+            android:name="ci.nsu.mobile.depositcalculator.ui.MainActivity"
+            android:exported="true"
             android:label="@string/title_activity_deposit_calculation"
-            android:theme="@style/Theme.Draft" />
+            android:theme="@style/Theme.Draft">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
