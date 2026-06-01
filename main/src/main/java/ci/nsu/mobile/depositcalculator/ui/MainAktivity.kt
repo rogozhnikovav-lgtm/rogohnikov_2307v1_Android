@@ -25,8 +25,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val database = AppDatabase.getDatabase(this)
-        repository = DepositRepository(database.depositDao())
+        val database = AppDatabase.getDatabase(context = this)
+        repository = DepositRepository(depositDao = database.depositDao())
 
         setContent {
             DepositCalculatorTheme {
@@ -52,14 +52,15 @@ fun DepositCalculatorApp(repository: DepositRepository) {
         composable("main") {
             MainScreen(
                 onCalculateClick = { navController.navigate("first_step") },
-                onHistoryClick = { navController.navigate("history") }
+                onHistoryClick = { navController.navigate("history") },
+                onExitClick = { /* Закрыть приложение или выйти */ }
             )
         }
 
         composable("first_step") {
             FirstStepScreen(
                 onNavigateBack = { navController.popBackStack() },
-                onNavigateToSecondStep = { initialAmount, periodMonths ->
+                onNavigateToSecondStep = { initialAmount: Double, periodMonths: Int ->  // Явно указываем типы
                     navController.navigate("second_step/$initialAmount/$periodMonths")
                 }
             )
@@ -68,18 +69,18 @@ fun DepositCalculatorApp(repository: DepositRepository) {
         composable(
             route = "second_step/{initialAmount}/{periodMonths}",
             arguments = listOf(
-                navArgument("initialAmount") { type = NavType.DoubleType },
+                navArgument("initialAmount") { type = NavType.FloatType },
                 navArgument("periodMonths") { type = NavType.IntType }
             )
         ) { backStackEntry ->
-            val initialAmount = backStackEntry.arguments?.getDouble("initialAmount") ?: 0.0
+            val initialAmount = backStackEntry.arguments?.getFloat("initialAmount")?.toDouble() ?: 0.0
             val periodMonths = backStackEntry.arguments?.getInt("periodMonths") ?: 0
 
             SecondStepScreen(
                 initialAmount = initialAmount,
                 periodMonths = periodMonths,
                 onNavigateBack = { navController.popBackStack() },
-                onNavigateToResult = { rate, topUp ->
+                onNavigateToResult = { rate: Double, topUp: Double ->  // Явно указываем типы
                     navController.navigate("result/$initialAmount/$periodMonths/$rate/$topUp")
                 }
             )
@@ -94,10 +95,10 @@ fun DepositCalculatorApp(repository: DepositRepository) {
                 navArgument("monthlyTopUp") { type = NavType.FloatType }
             )
         ) { backStackEntry ->
-            val initialAmount = backStackEntry.arguments?.getDouble("initialAmount") ?: 0.0
+            val initialAmount = backStackEntry.arguments?.getFloat("initialAmount")?.toDouble() ?: 0.0
             val periodMonths = backStackEntry.arguments?.getInt("periodMonths") ?: 0
-            val interestRate = backStackEntry.arguments?.getDouble("interestRate") ?: 0.0
-            val monthlyTopUp = backStackEntry.arguments?.getDouble("monthlyTopUp")
+            val interestRate = backStackEntry.arguments?.getFloat("interestRate")?.toDouble() ?: 0.0
+            val monthlyTopUp = backStackEntry.arguments?.getFloat("monthlyTopUp")?.toDouble() ?: 0.0
 
             ResultScreen(
                 initialAmount = initialAmount,
