@@ -31,6 +31,18 @@ abstract class AppDatabase : RoomDatabase() {
                 instance
             }
         }
+        fun getDatabases(context: Context): AppDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "deposit_database_v2"
+                ).fallbackToDestructiveMigration()  // Добавьте для отладки
+                    .build()
+                INSTANCE = instance
+                instance
+            }
+        }
     }
 }
 
