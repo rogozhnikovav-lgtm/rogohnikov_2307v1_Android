@@ -80,7 +80,7 @@ fun DepositCalculatorApp(repository: DepositRepository) {
                 initialAmount = initialAmount,
                 periodMonths = periodMonths,
                 onNavigateBack = { navController.popBackStack() },
-                onNavigateToResult = { rate: Double, topUp: Double ->  // Явно указываем типы
+                onNavigateToResult = { rate: Double, topUp: Double? ->  // Явно указываем типы
                     navController.navigate("result/$initialAmount/$periodMonths/$rate/$topUp")
                 }
             )

@@ -15,6 +15,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import ci.nsu.mobile.depositcalculator.data.database.DepositCalculationEntity
 import ci.nsu.mobile.depositcalculator.data.repository.DepositRepository
 import kotlinx.coroutines.flow.collectLatest
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,7 +101,7 @@ fun HistoryItemCard(
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = calculation.getFormattedDate(),
+                text = formatTimestamp(calculation.timestamp),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -108,7 +111,7 @@ fun HistoryItemCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Стартовый: ${String.format("%.2f", calculation.initialAmount)} ₽",
+                    text = "Стартовый: ${String.format("%.2f", calculation.amount)} ₽",
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Text(
@@ -133,21 +136,22 @@ fun DetailDialog(
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text("📅 Дата: ${calculation.getFormattedDate()}")
-                Text("💰 Стартовый взнос: ${String.format("%.2f", calculation.initialAmount)} ₽")
-                Text("📆 Срок: ${calculation.periodMonths} месяцев")
-                Text("📈 Процентная ставка: ${calculation.interestRate}%")
-                if (calculation.monthlyTopUp != null && calculation.monthlyTopUp > 0) {
-                    Text("➕ Ежемесячное пополнение: ${String.format("%.2f", calculation.monthlyTopUp)} ₽")
-                }
+                Text(text = "📅 Дата: ${formatTimestamp(calculation.timestamp)}")
+                Text(text = "💰 Стартовый взнос: ${String.format("%.2f", calculation.amount)} ₽")
+                Text(text = "📆 Срок: ${calculation.termMonths} месяцев")
+                Text(text = "📈 Процентная ставка: ${String.format("%.2f", calculation.interestRate)}%")
+                Text(text = "🔄 Капитализация: ${if (calculation.capitalization) "Да" else "Нет"}")
+
                 Divider(modifier = Modifier.padding(vertical = 8.dp))
+
                 Text(
-                    text = "💎 Итоговая сумма: ${String.format("%.2f", calculation.finalAmount)} ₽",
+                    text = "💰 Итоговая сумма: ${String.format("%.2f", calculation.finalAmount)} ₽",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    text = "📊 Начисленные проценты: ${String.format("%.2f", calculation.interestEarned)} ₽",
-                    style = MaterialTheme.typography.titleSmall
+                    text = "📊 Полученная прибыль: ${String.format("%.2f", calculation.profit)} ₽",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         },
@@ -157,4 +161,13 @@ fun DetailDialog(
             }
         }
     )
+}
+// Вспомогательная функция для форматирования timestamp в дату
+private fun formatTimestamp(timestamp: Long): String {
+    return try {
+        val date = Date(timestamp)
+        SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault()).format(date)
+    } catch (e: Exception) {
+        "Дата не указана"
+    }
 }

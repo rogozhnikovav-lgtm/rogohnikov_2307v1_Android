@@ -64,14 +64,4 @@ fun PracticeTheme(
         content = content
     )
 }
-@Composable
-fun DepositCalculatorTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
-}
+
